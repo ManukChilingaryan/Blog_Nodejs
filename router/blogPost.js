@@ -4,7 +4,7 @@ const router = express.Router();
 const Blog = require("../Constructors/blog.js");
 const { verifyToken, decodeToken } = require("../helperFunctions/jwtToken");
 
-// Create a new blog post
+// Create a new blog post 
 router.post("/blog", async (req, res) => {
   const token = req.headers.authorization.split(" ")[1];
   console.log(req.headers.authorization.split(" ")[1]);
@@ -28,7 +28,7 @@ router.post("/blog", async (req, res) => {
   }
 });
 
-// Ubdate a blog post
+// Ubdate a blog post using it's id
 router.put("/blog/:id", async (req, res) => {
   try {
     const token = req.headers.authorization.split(" ")[1];
@@ -58,7 +58,7 @@ router.put("/blog/:id", async (req, res) => {
   }
 });
 
-//delete a blog post
+//delete a blog post using it's id
 router.delete("/blog/:id", async (req, res) => {
   try {
     const token = req.headers.authorization.split(" ")[1];

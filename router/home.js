@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const Blog = require("../Constructors/blog");
 const Comment = require("../Constructors/comment");
 
-// get all blogposts
+// get all blogposts and comments
 router.get("/home", async (req, res) => {
     try{
         const allBlogs = await Blog.find({});

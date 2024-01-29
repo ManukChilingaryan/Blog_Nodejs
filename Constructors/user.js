@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-// Schema for User
+// crete user model
 const userSchema = new mongoose.Schema({
   name: {
     type: String,

@@ -6,6 +6,8 @@ const { comparePassword } = require("../helperFunctions/hashing");
 const { createToken, verifyToken } = require("../helperFunctions/jwtToken");
 const router = express.Router();
 
+// user login 
+// here creates new jwt token and sends it to the client
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
   const user = await User.findOne({ email: email });
@@ -15,7 +17,7 @@ router.post("/login", async (req, res) => {
       userId: user._id,
       isAuthorized: true,
     });
-    res.send({ access_token: token });
+   res.send({ access_token: token });
   } else {
     res.status(401).send("Invalid Credentials");
   }

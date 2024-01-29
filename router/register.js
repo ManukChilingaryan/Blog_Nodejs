@@ -49,7 +49,7 @@ router.put("/register", async (req, res) => {
       const user = await User.findByIdAndUpdate(userId, req.body);
       res.status(201).send(user);
     } else {
-      res.status(403).send("You are not authorized");
+      res.status(401).send("You are not authorized");
     }
   } catch (err) {
     res.status(400).send("error: email already exist");
@@ -68,7 +68,7 @@ router.delete("/register", async (req, res) => {
       const user = await User.findByIdAndDelete(userId);
       res.status(200).send(user);
     } else {
-      res.status(403).send("You are not authorized");
+      res.status(401).send("You are not authorized");
     }
   } catch (error) {
     res.status(400).send(error);

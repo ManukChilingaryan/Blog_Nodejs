@@ -1,5 +1,7 @@
 "use strict";
 const mongoose = require("mongoose");
+
+//create a Comment model
 const commentSchema = mongoose.Schema({
   text:   { type: String },
   author: {type: String  },

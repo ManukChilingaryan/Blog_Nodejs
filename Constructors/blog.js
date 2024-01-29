@@ -1,6 +1,7 @@
 "use strict";
 const mongoose = require("mongoose");
 
+// create a Blog model
 const blogSchema = mongoose.Schema({
   title: { type: String, required: true },
   body: { type: String, required: true },

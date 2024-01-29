@@ -57,7 +57,7 @@ router.put("/comment/:id", async (req, res) => {
       res.status(401).send("Unauthorized");
     }
   } catch (err) {
-    res.status(403).send(err);
+    res.status(400).send(err);
   }
 });
 
@@ -81,7 +81,7 @@ router.delete("/comment/:id", async (req, res) => {
       res.status(401).send("Unauthorized");
     }
   } catch (err) {
-    res.status(403).send(err);
+    res.status(400).send(err);
   }
 });
 
