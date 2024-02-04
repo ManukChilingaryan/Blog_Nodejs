@@ -7,7 +7,7 @@ const { verifyToken, decodeToken } = require("../helperFunctions/jwtToken");
 // create new comment when given blog id
 router.post("/comment/:id", async (req, res) => {
   try {
-    const token = req.headers.authorization.split(" ")[1];
+    const token = req.cookies.access_token;
     const isAuthorized = verifyToken(token);
 
     if (isAuthorized) {
@@ -33,11 +33,11 @@ router.post("/comment/:id", async (req, res) => {
 // update new comment when given comment id
 router.put("/comment/:id", async (req, res) => {
   try {
-    const token = req.headers.authorization.split(" ")[1];
+    const token = req.cookies.access_token;
     const isAuthorized = verifyToken(token);
 
     if (isAuthorized) {
-      const { userId } = await decodeToken(token);
+      const { userId } = decodeToken(token);
       const comment = await Comment.findById(req.params.id);
       console.log(comment);
       console.log(userId);
@@ -64,7 +64,7 @@ router.put("/comment/:id", async (req, res) => {
 //  delete comment when given comment id
 router.delete("/comment/:id", async (req, res) => {
   try {
-    const token = req.headers.authorization.split(" ")[1];
+    const token = req.cookies.access_token;
     const isAuthorized = verifyToken(token);
 
     if (isAuthorized) {
