@@ -6,12 +6,10 @@ const { verifyToken, decodeToken } = require("../helperFunctions/jwtToken");
 
 // Create a new blog post 
 router.post("/blog", async (req, res) => {
-  const token = req.headers.authorization.split(" ")[1];
-  console.log(req.headers.authorization.split(" ")[1]);
-  const verified = await verifyToken(token);
+  const token = req.cookies.access_token;
+  const isAuthorized= verifyToken(token);
 
-  console.log(verified);
-  if (verified) {
+  if (isAuthorized) {
     const { userId } = decodeToken(token);
     console.log(userId);
     const newPost = new Blog({
@@ -31,11 +29,10 @@ router.post("/blog", async (req, res) => {
 // Ubdate a blog post using it's id
 router.put("/blog/:id", async (req, res) => {
   try {
-    const token = req.headers.authorization.split(" ")[1];
-    console.log(req.headers.authorization.split(" ")[1]);
-    const verified = verifyToken(token);
+    const token = req.cookies.access_token;
+    const isAuthorized= verifyToken(token);
 
-    if (verified) {
+    if (isAuthorized) {
       const { userId } = decodeToken(token);
       const post = await Blog.findById(req.params.id);
       console.log("userId", userId);
@@ -61,7 +58,7 @@ router.put("/blog/:id", async (req, res) => {
 //delete a blog post using it's id
 router.delete("/blog/:id", async (req, res) => {
   try {
-    const token = req.headers.authorization.split(" ")[1];
+    const token = req.cookies.access_token;
     const isAuthorized = verifyToken(token);
 
     if (isAuthorized) {

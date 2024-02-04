@@ -4,9 +4,10 @@ const router = express.Router();
 
 // user logout 
 router.post("/logout", async (req, res) => {
-  // after this response in client side we need store  in bearer token
+  // log out handled by using cookies
   try {
-    res.status(200).send({ access_token: "" });
+    res.clearCookie('access_token');
+    res.status(200).send("user logged out");
   } catch (err) {
     res.status(400).send(err);
   }

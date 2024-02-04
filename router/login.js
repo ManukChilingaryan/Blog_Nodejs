@@ -17,7 +17,8 @@ router.post("/login", async (req, res) => {
       userId: user._id,
       isAuthorized: true,
     });
-   res.send({ access_token: token });
+    const maxAge = 24*60*60*1000;
+    res.cookie('access_token', token, {maxAge: maxAge,}).send('cookiess are puted into the cookie');
   } else {
     res.status(401).send("Invalid Credentials");
   }

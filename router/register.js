@@ -28,8 +28,14 @@ router.post("/register", async (req, res) => {
 // get user information
 router.get("/register", async (req, res) => {
   try {
-    const users = await User.find(req.query);
-    res.status(200).send(users);
+    const token = req.cookies.access_token;
+    const isAuthorized = verifyToken(token);
+    if (isAuthorized) {
+      const user= await User.find(req.query);
+      res.status(200).send(user);
+    } else {
+      res.status(401).send("Unauthorized");
+    }
   } catch (error) {
     res.status(400).send(error);
   }
@@ -38,8 +44,7 @@ router.get("/register", async (req, res) => {
 // update user account
 router.put("/register", async (req, res) => {
   try {
-    const token = req.headers.authorization.split(" ")[1];
-
+    const token = req.cookies.access_token;
     const isAuthorized = await verifyToken(token);
 
     if (isAuthorized) {
@@ -49,7 +54,7 @@ router.put("/register", async (req, res) => {
       const user = await User.findByIdAndUpdate(userId, req.body);
       res.status(201).send(user);
     } else {
-      res.status(401).send("You are not authorized");
+      res.status(401).send("Unauthorized");
     }
   } catch (err) {
     res.status(400).send("error: email already exist");
@@ -59,10 +64,8 @@ router.put("/register", async (req, res) => {
 // delete user account
 router.delete("/register", async (req, res) => {
   try {
-    const token = req.headers.authorization.split(" ")[1];
-
+    const token = req.cookies.access_token;
     const isAuthorized = await verifyToken(token);
-
     if (isAuthorized) {
       const { userId } = decodeToken(token);
       const user = await User.findByIdAndDelete(userId);
